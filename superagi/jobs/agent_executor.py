@@ -22,6 +22,12 @@ from superagi.tools.email.send_email_attachment import SendEmailAttachmentTool
 from superagi.tools.file.read_file import ReadFileTool
 from superagi.tools.file.write_file import WriteFileTool
 from superagi.tools.google_search.google_search import GoogleSearchTool
+
+# Discord Tool
+from superagi.tools.discord.discord_msg_automation import DiscordMsgTool
+
+# SuperAGI-main\superagi\tools\discord\discord_msg_automation.py
+
 from superagi.tools.thinking.tools import LlmThinkingTool
 from superagi.tools.jira.create_issue import CreateIssueTool
 from superagi.tools.jira.edit_issue import EditIssueTool
@@ -73,9 +79,11 @@ class AgentExecutor:
             print("Agent Execution : ")
             print(agent_execution)
             parsed_config = self.fetch_agent_configuration(session, agent, agent_execution)
+            obj_dscrd = DiscordMsgTool()
             tools = [
                 LlmThinkingTool(llm=OpenAi(model=parsed_config["model"])),
-                # GoogleSearchTool(),
+                obj_dscrd.run_discord_bot()
+                # GoogleSearchTool()
                 # WriteFileTool(),
                 # ReadFileTool(),
                 # ReadEmailTool(),
